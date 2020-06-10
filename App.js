@@ -5,6 +5,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer, StackActions } from '@react-navigation/native';
 import ViewPager from '@react-native-community/viewpager';
+import AntDesign from "react-native-vector-icons/AntDesign"
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
 
 const Drawer=createDrawerNavigator()
 const Tab=createBottomTabNavigator()
@@ -44,7 +47,31 @@ export default class App extends Component {
 class Main extends React.Component{
 
 render(){
-  return <Tab.Navigator>
+  return <Tab.Navigator
+  screenOptions={({ route }) => ({
+    tabBarIcon: ({ focused, color, size }) => {
+      let iconName;
+
+      if (route.name === 'Home') {
+        iconName = focused
+          ? 'ios-information-circle'
+          : 'ios-information-circle-outline';
+      } else if (route.name === 'Buy') {
+        iconName = focused ? 'ios-list-box' : 'ios-list';
+      }else if (route.name === 'FAQ') {
+        iconName = focused ? 'logo-google' : 'logo-googleplus';
+      }
+
+      // You can return any component that you like here!
+      return <Ionicons name={iconName} size={size} color={color} />;
+    },
+  })}
+  tabBarOptions={{
+    activeTintColor: 'tomato',
+    inactiveTintColor: 'gray',
+  }}
+  >
+
     <Tab.Screen name="Home" component={Home}/>
     <Tab.Screen name="Buy" component={Buy}/>
     <Tab.Screen name="FAQ" component={FAQ}/>
@@ -63,7 +90,10 @@ class Setting extends React.Component{
 class Home extends React.Component{
 
   render(){
-  return  <Text>Main</Text>
+  return (<View>
+    <AntDesign name="stepbackward" size={60} color="red"/>
+    <Text>Main</Text>
+  </View> )
   }
 }
 
